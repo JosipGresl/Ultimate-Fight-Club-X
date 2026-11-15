@@ -26,16 +26,8 @@ public partial class MembersViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task AddTestMemberAsync()
+    private async Task AddMemberAsync()
     {
-        var number = Members.Count + 1;
-        var member = new Member
-        {
-            FullName = $"Test Član {number}",
-            Group = "MMA - početnici"
-        };
-
-        await _database.AddMemberAsync(member);
-        Members.Add(member);
+        await Shell.Current.GoToAsync("addmember");
     }
 }

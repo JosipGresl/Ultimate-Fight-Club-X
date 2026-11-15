@@ -21,6 +21,8 @@ namespace Ultimate_Fight_Club_X
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddTransient<AddMemberViewModel>();
+            builder.Services.AddTransient<AddMemberPage>();
             builder.Services.AddSingleton<MemberDatabase>();
             builder.Services.AddTransient<MembersViewModel>();
             builder.Services.AddTransient<MembersPage>();

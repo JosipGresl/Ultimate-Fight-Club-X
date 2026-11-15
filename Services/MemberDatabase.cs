@@ -11,7 +11,7 @@ public class MemberDatabase
     {
         if (_db is not null) return;
 
-        var path = Path.Combine(FileSystem.AppDataDirectory, "members.db3");
+        var path = Path.Combine(FileSystem.AppDataDirectory, "members_v2.db3");
         _db = new SQLiteAsyncConnection(path);
         await _db.CreateTableAsync<Member>();
     }

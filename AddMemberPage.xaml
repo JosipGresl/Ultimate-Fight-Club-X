@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ultimate_Fight_Club_X.AddMemberPage"
+             Title="Novi član">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <Label Text="Ime i prezime" />
+            <Entry Text="{Binding FullName}" />
+
+            <Label Text="OIB" />
+            <Entry Text="{Binding Oib}" Keyboard="Numeric" MaxLength="11" />
+
+            <Label Text="Datum rođenja" />
+            <DatePicker Date="{Binding DateOfBirth}" />
+
+            <Label Text="Datum pristupanja" />
+            <DatePicker Date="{Binding JoinDate}" />
+
+            <Label Text="Kategorija članstva" />
+            <Picker ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" />
+
+            <Label Text="Grupa" />
+            <Picker ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" />
+
+            <VerticalStackLayout IsVisible="{Binding IsMinor}" Spacing="12">
+                <Label Text="Maloljetni član: potrebna je suglasnost zakonskog zastupnika"
+                       FontAttributes="Bold" />
+                <Entry Placeholder="Ime zakonskog zastupnika" Text="{Binding GuardianName}" />
+                <HorizontalStackLayout Spacing="8">
+                    <CheckBox IsChecked="{Binding GuardianConsent}" />
+                    <Label Text="Pisana suglasnost je dana" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+            <Button Text="Spremi" Command="{Binding SaveCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
