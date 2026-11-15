@@ -5,10 +5,10 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
+    <Color x:Key="Primary">#D61F26</Color>
+    <Color x:Key="PrimaryDark">#F04248</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
+    <Color x:Key="Secondary">#FBE9EA</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
 
@@ -41,4 +41,18 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+    <Color x:Key="BrandColor">#D61F26</Color>
+    <Color x:Key="BrandColorLight">#F04248</Color>
+    <Color x:Key="BrandDeep">#8E1117</Color>
+    <Color x:Key="BrandSoftLight">#FBE9EA</Color>
+    <Color x:Key="BrandSoftDark">#3A1618</Color>
+
+    <Color x:Key="PageLight">#F5F5F6</Color>
+    <Color x:Key="PageDark">#0E0E10</Color>
+    <Color x:Key="CardLight">#FFFFFF</Color>
+    <Color x:Key="CardDark">#1A1A1D</Color>
+    <Color x:Key="CardStrokeLight">#E4E4E7</Color>
+    <Color x:Key="CardStrokeDark">#2A2A2E</Color>
+    <Color x:Key="MutedLight">#666670</Color>
+    <Color x:Key="MutedDark">#A3A3AB</Color>
 </ResourceDictionary>
