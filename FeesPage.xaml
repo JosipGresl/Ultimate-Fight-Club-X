@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Ultimate_Fight_Club_X.ViewModels"
+             x:Class="Ultimate_Fight_Club_X.FeesPage"
+             Title="Članarine">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="12">
+
+        <Label Grid.Row="0" Text="{Binding SummaryText}" FontAttributes="Bold" />
+
+        <HorizontalStackLayout Grid.Row="1" Spacing="8">
+            <Switch IsToggled="{Binding OnlyProblems}" />
+            <Label Text="Samo kasne i bez uplate" VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Items}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,Auto" Padding="0,8">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="{Binding FullName}" FontSize="18" />
+                            <Label Text="{Binding Group}" TextColor="Gray" />
+                            <Label Text="{Binding StatusText}"
+                                   TextColor="{Binding StatusColor}"
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                        <Button Grid.Column="1" Text="Uplata" VerticalOptions="Center"
+                                Clicked="OnPaymentClicked" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

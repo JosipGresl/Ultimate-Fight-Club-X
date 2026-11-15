@@ -14,8 +14,8 @@ public class MemberDatabase
         var path = Path.Combine(FileSystem.AppDataDirectory, "members_v2.db3");
         _db = new SQLiteAsyncConnection(path);
         await _db.CreateTableAsync<Member>();
-        await _db.CreateTableAsync<Member>();
         await _db.CreateTableAsync<Attendance>();
+        await _db.CreateTableAsync<Payment>();
     }
 
     public async Task<List<Member>> GetMembersAsync()
@@ -56,5 +56,32 @@ public class MemberDatabase
             await _db.InsertAsync(new Attendance { MemberId = memberId, Date = day });
         else if (!present && existing is not null)
             await _db.DeleteAsync(existing);
+    }
+    public async Task<Member?> GetMemberAsync(int id)
+    {
+        await InitAsync();
+        return await _db!.Table<Member>().Where(m => m.Id == id).FirstOrDefaultAsync();
+    }
+
+    public async Task AddPaymentAsync(Payment payment)
+    {
+        await InitAsync();
+        await _db!.InsertAsync(payment);
+    }
+
+    public async Task<DateTime?> GetLatestValidUntilAsync(int memberId)
+    {
+        await InitAsync();
+        var payments = await _db!.Table<Payment>().Where(p => p.MemberId == memberId).ToListAsync();
+        return payments.Count == 0 ? (DateTime?)null : payments.Max(p => p.ValidUntil);
+    }
+
+    public async Task<Dictionary<int, DateTime>> GetLatestValidUntilByMemberAsync()
+    {
+        await InitAsync();
+        var payments = await _db!.Table<Payment>().ToListAsync();
+        return payments
+            .GroupBy(p => p.MemberId)
+            .ToDictionary(g => g.Key, g => g.Max(p => p.ValidUntil));
     }
 }

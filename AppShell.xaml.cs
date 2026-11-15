@@ -6,6 +6,7 @@
         {
             InitializeComponent();
             Routing.RegisterRoute("addmember", typeof(AddMemberPage));
+            Routing.RegisterRoute("addpayment", typeof(AddPaymentPage));
         }
     }
 }
