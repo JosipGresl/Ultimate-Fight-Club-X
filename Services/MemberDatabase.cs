@@ -114,4 +114,21 @@ public class MemberDatabase
             conn.Execute("DELETE FROM Member WHERE Id = ?", memberId);
         });
     }
+    public async Task<List<Payment>> GetAllPaymentsAsync()
+    {
+        await InitAsync();
+        return await _db!.Table<Payment>().ToListAsync();
+    }
+
+    public async Task<List<Attendance>> GetAllAttendanceAsync()
+    {
+        await InitAsync();
+        return await _db!.Table<Attendance>().ToListAsync();
+    }
+    public async Task<bool> OibExistsAsync(string oib, int? excludeId = null)
+    {
+        await InitAsync();
+        var matches = await _db!.Table<Member>().Where(m => m.Oib == oib).ToListAsync();
+        return matches.Any(m => m.Id != excludeId);
+    }
 }

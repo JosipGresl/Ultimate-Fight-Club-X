@@ -71,9 +71,19 @@ public partial class AddMemberViewModel : ObservableObject, IQueryAttributable
             ErrorMessage = "OIB nije ispravan (mora imati 11 znamenki).";
             return;
         }
+        if (await _database.OibExistsAsync(Oib, _editing?.Id))
+        {
+            ErrorMessage = "Član s ovim OIB-om već postoji.";
+            return;
+        }
         if (DateOfBirth >= DateTime.Today)
         {
             ErrorMessage = "Datum rođenja mora biti u prošlosti.";
+            return;
+        }
+        if (JoinDate.Date < DateOfBirth.Date)
+        {
+            ErrorMessage = "Datum pristupanja ne može biti prije datuma rođenja.";
             return;
         }
         if (SelectedCategory is null || SelectedGroup is null)

@@ -13,7 +13,13 @@ public class Member
     public DateTime? LeaveDate { get; set; }
     public string MembershipCategory { get; set; } = "";
     public string Group { get; set; } = "";
-    public bool MembershipPaid { get; set; }
     public string? GuardianName { get; set; }
     public bool GuardianConsent { get; set; }
+    [Ignore]
+    public bool HasLeft => LeaveDate is not null;
+
+    [Ignore]
+    public string Subtitle => HasLeft
+        ? $"{Group} · napustio/la {LeaveDate:dd.MM.yyyy.}"
+        : Group;
 }

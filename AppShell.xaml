@@ -17,5 +17,8 @@
         <ShellContent Title="Članarine"
               ContentTemplate="{DataTemplate local:FeesPage}"
               Route="FeesPage" />
+        <ShellContent Title="Pregled"
+              ContentTemplate="{DataTemplate local:DashboardPage}"
+              Route="DashboardPage" />
     </TabBar>
 </Shell>

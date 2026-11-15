@@ -24,7 +24,10 @@ public partial class MemberDetailViewModel : ObservableObject, IQueryAttributabl
     [ObservableProperty] private string attendanceText = "";
     [ObservableProperty] private string guardianText = "";
     [ObservableProperty] private bool hasGuardian;
-    [ObservableProperty] private bool isActive = true;
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsFormer))]
+    private bool isActive = true;
+
+    public bool IsFormer => !IsActive;
     [ObservableProperty] private bool noPayments;
 
     public MemberDetailViewModel(MemberDatabase database)
@@ -139,5 +142,21 @@ public partial class MemberDetailViewModel : ObservableObject, IQueryAttributabl
 
         await _database.DeleteMemberAsync(_memberId);
         await Shell.Current.GoToAsync("..");
+    }
+    [RelayCommand]
+    private async Task ReactivateAsync()
+    {
+        var confirm = await Shell.Current.DisplayAlert(
+            "Ponovna aktivacija",
+            $"Vratiti {FullName} u aktivne članove?",
+            "Da", "Odustani");
+        if (!confirm) return;
+
+        var member = await _database.GetMemberAsync(_memberId);
+        if (member is null) return;
+
+        member.LeaveDate = null;
+        await _database.UpdateMemberAsync(member);
+        await LoadAsync();
     }
 }

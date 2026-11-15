@@ -38,6 +38,8 @@
                     IsVisible="{Binding IsActive}" />
             <Button Text="Trajno obriši člana" Command="{Binding DeleteCommand}"
                     BackgroundColor="#C62828" TextColor="White" />
+            <Button Text="Ponovno aktiviraj člana" Command="{Binding ReactivateCommand}"
+                    IsVisible="{Binding IsFormer}" />
 
         </VerticalStackLayout>
     </ScrollView>
