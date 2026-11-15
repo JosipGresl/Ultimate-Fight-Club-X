@@ -12,7 +12,7 @@ public partial class AddMemberViewModel : ObservableObject
     private readonly MemberDatabase _database;
 
     public List<string> Categories { get; } = new() { "Redovni član", "Mlađi član", "Počasni član" };
-    public List<string> Groups { get; } = new() { "MMA - početnici", "MMA - napredni", "BJJ", "Boks", "Djeca" };
+    public List<string> Groups { get; } = ClubOptions.Groups;
 
     [ObservableProperty] private string fullName = "";
     [ObservableProperty] private string oib = "";

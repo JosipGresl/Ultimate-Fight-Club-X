@@ -4,11 +4,15 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Ultimate_Fight_Club_X"
-    Title="Ultimate_Fight_Club_X">
+    Shell.FlyoutBehavior="Disabled"
+    Title="Ultimate Fight Club X">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MembersPage}"
-        Route="MainPage" />
-
+    <TabBar>
+        <ShellContent Title="Članovi"
+                      ContentTemplate="{DataTemplate local:MembersPage}"
+                      Route="MembersPage" />
+        <ShellContent Title="Dolasci"
+                      ContentTemplate="{DataTemplate local:AttendancePage}"
+                      Route="AttendancePage" />
+    </TabBar>
 </Shell>

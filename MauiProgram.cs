@@ -26,6 +26,8 @@ namespace Ultimate_Fight_Club_X
             builder.Services.AddSingleton<MemberDatabase>();
             builder.Services.AddTransient<MembersViewModel>();
             builder.Services.AddTransient<MembersPage>();
+            builder.Services.AddTransient<AttendanceViewModel>();
+            builder.Services.AddTransient<AttendancePage>();
             return builder.Build();
         }
     }
