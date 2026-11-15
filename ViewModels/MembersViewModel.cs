@@ -2,24 +2,40 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Ultimate_Fight_Club_X.Models;
+using Ultimate_Fight_Club_X.Services;
 
 namespace Ultimate_Fight_Club_X.ViewModels;
 
 public partial class MembersViewModel : ObservableObject
 {
+    private readonly MemberDatabase _database;
+
     public ObservableCollection<Member> Members { get; } = new();
 
-    public MembersViewModel()
+    public MembersViewModel(MemberDatabase database)
     {
-        Members.Add(new Member { Id = 1, FullName = "Test Član 1", Group = "MMA - napredni" });
-        Members.Add(new Member { Id = 2, FullName = "Test Član 2", Group = "BJJ - početnici" });
-        Members.Add(new Member { Id = 3, FullName = "Test Član 3", Group = "Boks - djeca" });
+        _database = database;
     }
 
     [RelayCommand]
-    private void AddTestMember()
+    private async Task LoadAsync()
     {
-        var id = Members.Count + 1;
-        Members.Add(new Member { Id = id, FullName = $"Test Član {id}", Group = "MMA - početnici" });
+        Members.Clear();
+        foreach (var member in await _database.GetMembersAsync())
+            Members.Add(member);
+    }
+
+    [RelayCommand]
+    private async Task AddTestMemberAsync()
+    {
+        var number = Members.Count + 1;
+        var member = new Member
+        {
+            FullName = $"Test Član {number}",
+            Group = "MMA - početnici"
+        };
+
+        await _database.AddMemberAsync(member);
+        Members.Add(member);
     }
 }

@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Ultimate_Fight_Club_X.Services;
+using Ultimate_Fight_Club_X.ViewModels;
+
 
 namespace Ultimate_Fight_Club_X
 {
@@ -18,7 +21,9 @@ namespace Ultimate_Fight_Club_X
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-
+            builder.Services.AddSingleton<MemberDatabase>();
+            builder.Services.AddTransient<MembersViewModel>();
+            builder.Services.AddTransient<MembersPage>();
             return builder.Build();
         }
     }
