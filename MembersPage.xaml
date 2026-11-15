@@ -10,7 +10,9 @@
         Text="Dodaj člana"
         Command="{Binding AddMemberCommand}" />
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Members}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Members}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnMemberSelected">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <VerticalStackLayout Padding="0,8">

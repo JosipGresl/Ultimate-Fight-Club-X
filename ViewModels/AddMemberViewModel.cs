@@ -1,19 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Security.Cryptography;
 using Ultimate_Fight_Club_X.Helpers;
 using Ultimate_Fight_Club_X.Models;
 using Ultimate_Fight_Club_X.Services;
 
 namespace Ultimate_Fight_Club_X.ViewModels;
 
-public partial class AddMemberViewModel : ObservableObject
+public partial class AddMemberViewModel : ObservableObject, IQueryAttributable
 {
     private readonly MemberDatabase _database;
+    private Member? _editing;
 
     public List<string> Categories { get; } = new() { "Redovni član", "Mlađi član", "Počasni član" };
     public List<string> Groups { get; } = ClubOptions.Groups;
 
+    [ObservableProperty] private string pageTitle = "Novi član";
     [ObservableProperty] private string fullName = "";
     [ObservableProperty] private string oib = "";
     [ObservableProperty, NotifyPropertyChangedFor(nameof(IsMinor))]
@@ -30,6 +31,29 @@ public partial class AddMemberViewModel : ObservableObject
     public AddMemberViewModel(MemberDatabase database)
     {
         _database = database;
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("memberId", out var value))
+            _ = LoadForEditAsync(Convert.ToInt32(value));
+    }
+
+    private async Task LoadForEditAsync(int id)
+    {
+        var member = await _database.GetMemberAsync(id);
+        if (member is null) return;
+
+        _editing = member;
+        PageTitle = "Uredi člana";
+        FullName = member.FullName;
+        Oib = member.Oib;
+        DateOfBirth = member.DateOfBirth;
+        JoinDate = member.JoinDate;
+        SelectedCategory = member.MembershipCategory;
+        SelectedGroup = member.Group;
+        GuardianName = member.GuardianName ?? "";
+        GuardianConsent = member.GuardianConsent;
     }
 
     [RelayCommand]
@@ -63,19 +87,21 @@ public partial class AddMemberViewModel : ObservableObject
             return;
         }
 
-        var member = new Member
-        {
-            FullName = FullName.Trim(),
-            Oib = Oib,
-            DateOfBirth = DateOfBirth,
-            JoinDate = JoinDate,
-            MembershipCategory = SelectedCategory,
-            Group = SelectedGroup,
-            GuardianName = IsMinor ? GuardianName.Trim() : null,
-            GuardianConsent = IsMinor && GuardianConsent
-        };
+        var member = _editing ?? new Member();
+        member.FullName = FullName.Trim();
+        member.Oib = Oib;
+        member.DateOfBirth = DateOfBirth;
+        member.JoinDate = JoinDate;
+        member.MembershipCategory = SelectedCategory;
+        member.Group = SelectedGroup;
+        member.GuardianName = IsMinor ? GuardianName.Trim() : null;
+        member.GuardianConsent = IsMinor && GuardianConsent;
 
-        await _database.AddMemberAsync(member);
+        if (_editing is null)
+            await _database.AddMemberAsync(member);
+        else
+            await _database.UpdateMemberAsync(member);
+
         await Shell.Current.GoToAsync("..");
     }
 }

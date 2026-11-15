@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Ultimate_Fight_Club_X.AddMemberPage"
-             Title="Novi član">
+             Title="{Binding PageTitle}">
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">

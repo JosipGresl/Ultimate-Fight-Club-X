@@ -1,4 +1,5 @@
 using Ultimate_Fight_Club_X.ViewModels;
+using Ultimate_Fight_Club_X.Models;
 
 namespace Ultimate_Fight_Club_X;
 
@@ -17,4 +18,13 @@ public partial class MembersPage : ContentPage
         base.OnAppearing();
         await _viewModel.LoadCommand.ExecuteAsync(null);
     }
+    private async void OnMemberSelected(object? sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is Member member)
+        {
+            ((CollectionView)sender!).SelectedItem = null;
+            await Shell.Current.GoToAsync($"memberdetail?memberId={member.Id}");
+        }
+    }
+
 }

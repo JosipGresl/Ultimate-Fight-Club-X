@@ -84,4 +84,34 @@ public class MemberDatabase
             .GroupBy(p => p.MemberId)
             .ToDictionary(g => g.Key, g => g.Max(p => p.ValidUntil));
     }
+    public async Task UpdateMemberAsync(Member member)
+    {
+        await InitAsync();
+        await _db!.UpdateAsync(member);
+    }
+
+    public async Task<List<Payment>> GetPaymentsAsync(int memberId)
+    {
+        await InitAsync();
+        var list = await _db!.Table<Payment>().Where(p => p.MemberId == memberId).ToListAsync();
+        return list.OrderByDescending(p => p.PaymentDate).ToList();
+    }
+
+    public async Task<List<DateTime>> GetAttendanceDatesAsync(int memberId)
+    {
+        await InitAsync();
+        var list = await _db!.Table<Attendance>().Where(a => a.MemberId == memberId).ToListAsync();
+        return list.Select(a => a.Date).ToList();
+    }
+
+    public async Task DeleteMemberAsync(int memberId)
+    {
+        await InitAsync();
+        await _db!.RunInTransactionAsync(conn =>
+        {
+            conn.Execute("DELETE FROM Attendance WHERE MemberId = ?", memberId);
+            conn.Execute("DELETE FROM Payment WHERE MemberId = ?", memberId);
+            conn.Execute("DELETE FROM Member WHERE Id = ?", memberId);
+        });
+    }
 }
