@@ -6,7 +6,8 @@
 
     <Grid RowDefinitions="Auto,Auto,Auto,*" Margin="16" RowSpacing="8">
 
-        <Button Grid.Row="0" Text="Dodaj člana" Command="{Binding AddMemberCommand}" />
+        <Button Grid.Row="0" Text="Dodaj člana"  Command="{Binding AddMemberCommand}" Style="{StaticResource PrimaryButton}"
+             />
 
         <SearchBar Grid.Row="1" Placeholder="Traži po imenu ili grupi"
                    Text="{Binding SearchText}" />

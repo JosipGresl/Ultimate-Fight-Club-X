@@ -5,7 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Ultimate_Fight_Club_X"
     Shell.FlyoutBehavior="Disabled"
-    Title="Ultimate Fight Club X">
+    Title="Ultimate Fight Club X"
+    Shell.BackgroundColor="#0E0E10"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White"
+    Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+    Shell.TabBarForegroundColor="{AppThemeBinding Light={StaticResource BrandColor}, Dark={StaticResource BrandColorLight}}"
+    Shell.TabBarTitleColor="{AppThemeBinding Light={StaticResource BrandColor}, Dark={StaticResource BrandColorLight}}"
+    Shell.TabBarUnselectedColor="{AppThemeBinding Light={StaticResource MutedLight}, Dark={StaticResource MutedDark}}">
 
     <TabBar>
         <ShellContent Title="Članovi"
