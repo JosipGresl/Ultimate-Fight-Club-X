@@ -5,6 +5,9 @@
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute("addmember", typeof(AddMemberPage));
+            Routing.RegisterRoute("addpayment", typeof(AddPaymentPage));
+            Routing.RegisterRoute("memberdetail", typeof(MemberDetailPage));
         }
     }
 }

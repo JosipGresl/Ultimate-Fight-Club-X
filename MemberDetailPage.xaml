@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ultimate_Fight_Club_X.MemberDetailPage"
+             Title="Detalji člana">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="8">
+
+            <Label Text="{Binding FullName}" FontSize="24" FontAttributes="Bold" />
+            <Label Text="{Binding StatusText}" TextColor="{Binding StatusColor}" FontAttributes="Bold" />
+
+            <Label Text="Podaci" FontAttributes="Bold" Margin="0,16,0,0" />
+            <Label Text="{Binding GroupName, StringFormat='Grupa: {0}'}" />
+            <Label Text="{Binding CategoryName, StringFormat='Kategorija: {0}'}" />
+            <Label Text="{Binding MaskedOib, StringFormat='OIB: {0}'}" />
+            <Label Text="{Binding DateOfBirthText, StringFormat='Datum rođenja: {0}'}" />
+            <Label Text="{Binding JoinDateText, StringFormat='Član od: {0}'}" />
+            <Label Text="{Binding GuardianText}" IsVisible="{Binding HasGuardian}" />
+
+            <Label Text="Dolasci" FontAttributes="Bold" Margin="0,16,0,0" />
+            <Label Text="{Binding AttendanceText}" />
+
+            <Label Text="Povijest uplata" FontAttributes="Bold" Margin="0,16,0,0" />
+            <Label Text="Nema evidentiranih uplata." TextColor="Gray" IsVisible="{Binding NoPayments}" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Payments}" Spacing="4">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding .}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button Text="Nova uplata" Command="{Binding AddPaymentCommand}"
+                    IsVisible="{Binding IsActive}" Margin="0,20,0,0" />
+            <Button Text="Uredi podatke" Command="{Binding EditCommand}" />
+            <Button Text="Završi članstvo" Command="{Binding EndMembershipCommand}"
+                    IsVisible="{Binding IsActive}" />
+            <Button Text="Trajno obriši člana" Command="{Binding DeleteCommand}"
+                    BackgroundColor="#C62828" TextColor="White" />
+            <Button Text="Ponovno aktiviraj člana" Command="{Binding ReactivateCommand}"
+                    IsVisible="{Binding IsFormer}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

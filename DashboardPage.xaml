@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ultimate_Fight_Club_X.DashboardPage"
+             Title="Pregled">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <!-- Sažetak -->
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+
+                <Border Grid.Row="0" Grid.Column="0" Padding="12" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout>
+                        <Label Text="Aktivni članovi" TextColor="Gray" />
+                        <Label Text="{Binding ActiveMembersText}" FontSize="28" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="0" Grid.Column="1" Padding="12" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout>
+                        <Label Text="Novi ovaj mjesec" TextColor="Gray" />
+                        <Label Text="{Binding NewThisMonthText}" FontSize="28" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0" Padding="12" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout>
+                        <Label Text="Članarina kasni" TextColor="Gray" />
+                        <Label Text="{Binding OverdueText}" FontSize="28" FontAttributes="Bold" TextColor="#C62828" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="1" Padding="12" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout>
+                        <Label Text="Prihod ovaj mjesec" TextColor="Gray" />
+                        <Label Text="{Binding RevenueThisMonthText}" FontSize="22" FontAttributes="Bold" TextColor="#2E7D32" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <!-- Prihod po mjesecima -->
+            <Label Text="Prihod po mjesecima" FontAttributes="Bold" FontSize="18" Margin="0,16,0,0" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding RevenueBars}" Spacing="8">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Spacing="2">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="{Binding Label}" />
+                                <Label Grid.Column="1" Text="{Binding Value}" TextColor="Gray" />
+                            </Grid>
+                            <ProgressBar Progress="{Binding Progress}" ProgressColor="#2E7D32" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <!-- Popunjenost grupa -->
+            <Label Text="Popunjenost grupa (zadnjih 30 dana)" FontAttributes="Bold" FontSize="18" Margin="0,16,0,0" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding GroupBars}" Spacing="8">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="{Binding Label}" />
+                            <ProgressBar Progress="{Binding Progress}" ProgressColor="#1565C0" />
+                            <Label Text="{Binding Value}" TextColor="Gray" FontSize="12" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <!-- Neaktivni -->
+            <Label Text="Neaktivni članovi (30+ dana bez dolaska)" FontAttributes="Bold" FontSize="18" Margin="0,16,0,0" />
+            <Label Text="Nema neaktivnih članova." TextColor="Gray">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding HasInactive}" Value="True">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding InactiveMembers}" Spacing="4">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="0,6">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnInactiveTapped" />
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Label Text="{Binding FullName}" FontSize="16" />
+                            <Label Text="{Binding Group}" TextColor="Gray" FontSize="12" />
+                            <Label Text="{Binding LastSeenText}" TextColor="#EF6C00" FontSize="12" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

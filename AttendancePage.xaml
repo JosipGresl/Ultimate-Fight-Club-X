@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ultimate_Fight_Club_X.AttendancePage"
+             Title="Dolasci">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Padding="16" RowSpacing="12">
+
+        <Picker Grid.Row="0" Title="Odaberi grupu"
+                ItemsSource="{Binding Groups}"
+                SelectedItem="{Binding SelectedGroup}" />
+
+        <DatePicker Grid.Row="1" Date="{Binding SelectedDate}" />
+
+        <Label Grid.Row="2" Text="{Binding StatusMessage}" TextColor="Green" />
+
+        <CollectionView Grid.Row="3" ItemsSource="{Binding Items}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout Spacing="12" Padding="0,6">
+                        <CheckBox IsChecked="{Binding IsPresent}" />
+                        <Label Text="{Binding FullName}" FontSize="18" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="4" Text="Spremi dolaske" Command="{Binding SaveCommand}" />
+
+    </Grid>
+</ContentPage>

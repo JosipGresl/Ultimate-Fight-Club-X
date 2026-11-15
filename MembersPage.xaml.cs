@@ -1,17 +1,30 @@
 using Ultimate_Fight_Club_X.Models;
+using Ultimate_Fight_Club_X.ViewModels;
 
 namespace Ultimate_Fight_Club_X;
 
 public partial class MembersPage : ContentPage
 {
-	public MembersPage()
-	{
+    private readonly MembersViewModel _viewModel;
+
+    public MembersPage(MembersViewModel viewModel)
+    {
         InitializeComponent();
-        MembersList.ItemsSource = new List<Member>
-{
-    new() { Id = 1, FullName = "Test Član 1", Group = "MMA - napredni" },
-    new() { Id = 2, FullName = "Test Član 2", Group = "BJJ - početnici" },
-    new() { Id = 3, FullName = "Test Član 3", Group = "Boks - djeca" },
-};
+        BindingContext = _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.LoadCommand.ExecuteAsync(null);
+    }
+
+    private async void OnMemberSelected(object? sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is Member member)
+        {
+            ((CollectionView)sender!).SelectedItem = null;
+            await Shell.Current.GoToAsync($"memberdetail?memberId={member.Id}");
+        }
     }
 }

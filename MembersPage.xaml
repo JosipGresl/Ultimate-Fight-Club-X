@@ -4,15 +4,41 @@
              x:Class="Ultimate_Fight_Club_X.MembersPage"
              Title="Članovi">
 
-    <CollectionView x:Name="MembersList" Margin="16">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <VerticalStackLayout Padding="0,8">
-                    <Label Text="{Binding FullName}" FontSize="18" />
-                    <Label Text="{Binding Group}" TextColor="Gray" />
-                </VerticalStackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Margin="16" RowSpacing="8">
 
+        <Button Grid.Row="0" Text="Dodaj člana" Command="{Binding AddMemberCommand}" />
+
+        <SearchBar Grid.Row="1" Placeholder="Traži po imenu ili grupi"
+                   Text="{Binding SearchText}" />
+
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto">
+            <Switch Grid.Column="0" IsToggled="{Binding ShowFormer}" />
+            <Label Grid.Column="1" Text="Prikaži i bivše članove" VerticalOptions="Center" />
+            <Label Grid.Column="2" Text="{Binding CountText}" TextColor="Gray" VerticalOptions="Center" />
+        </Grid>
+
+        <Label Grid.Row="3" Text="Nema članova koji odgovaraju pretrazi."
+               TextColor="Gray" HorizontalOptions="Center" Margin="0,24,0,0"
+               IsVisible="{Binding IsEmpty}" />
+
+        <CollectionView Grid.Row="3" ItemsSource="{Binding Members}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnMemberSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Padding="0,8">
+                        <Label Text="{Binding FullName}" FontSize="18">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding HasLeft}" Value="True">
+                                    <Setter Property="TextColor" Value="Gray" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Label Text="{Binding Subtitle}" TextColor="Gray" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
 </ContentPage>
