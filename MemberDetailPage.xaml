@@ -33,13 +33,17 @@
 
             <Button Text="Nova uplata" Command="{Binding AddPaymentCommand}"
                     IsVisible="{Binding IsActive}" Margin="0,20,0,0" />
-            <Button Text="Uredi podatke" Command="{Binding EditCommand}" />
+            <Button Text="Uredi podatke" Command="{Binding EditCommand}"
+                    Style="{StaticResource SecondaryButton}" />
             <Button Text="Završi članstvo" Command="{Binding EndMembershipCommand}"
-                    IsVisible="{Binding IsActive}" />
-            <Button Text="Trajno obriši člana" Command="{Binding DeleteCommand}"
-                    BackgroundColor="#C62828" TextColor="White" />
+                    IsVisible="{Binding IsActive}"
+                    Style="{StaticResource SecondaryButton}" />
             <Button Text="Ponovno aktiviraj člana" Command="{Binding ReactivateCommand}"
-                    IsVisible="{Binding IsFormer}" />
+                    IsVisible="{Binding IsFormer}" 
+                    Style="{StaticResource SecondaryButton}"/>  
+            <Button Text="Trajno obriši člana" Command="{Binding DeleteCommand}"
+                    Style="{StaticResource DangerOutlineButton}" Margin="0,24,0,0" />
+            
 
         </VerticalStackLayout>
     </ScrollView>

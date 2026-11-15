@@ -95,8 +95,9 @@ public partial class MemberDetailViewModel : ObservableObject, IQueryAttributabl
             AttendanceText = $"Ukupno: {dates.Count}  ·  zadnjih 30 dana: {last30}  ·  zadnji dolazak: {dates.Max():dd.MM.yyyy.}";
         }
 
-        Payments.Clear();
+        
         var payments = await _database.GetPaymentsAsync(_memberId);
+        Payments.Clear();
         foreach (var p in payments)
             Payments.Add($"{p.PaymentDate:dd.MM.yyyy.}  ·  {p.Amount:0.00} EUR  ·  vrijedi do {p.ValidUntil:dd.MM.yyyy.}");
         NoPayments = payments.Count == 0;

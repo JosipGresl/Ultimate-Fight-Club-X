@@ -28,13 +28,13 @@ public partial class AttendanceViewModel : ObservableObject
     [RelayCommand]
     private async Task LoadAsync()
     {
-        Items.Clear();
+        
         StatusMessage = "";
         if (SelectedGroup is null) return;
 
         var members = await _database.GetActiveMembersByGroupAsync(SelectedGroup);
         var present = await _database.GetPresentMemberIdsAsync(SelectedDate);
-
+        Items.Clear();
         foreach (var m in members)
         {
             Items.Add(new AttendanceItem
